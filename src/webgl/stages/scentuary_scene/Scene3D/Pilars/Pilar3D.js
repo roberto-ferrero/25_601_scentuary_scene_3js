@@ -3,7 +3,7 @@ import * as THREE from 'three'
 
 class Pilar3D{
     constructor (obj){
-        console.log("(Pilar3D.CONSTRUCTORA): ", obj)
+        // console.log("(Pilar3D.CONSTRUCTORA): ", obj)
         this.app = obj.app
         this.project = obj.project
         this.stage = obj.stage
@@ -16,8 +16,8 @@ class Pilar3D{
             roughness: 0.4,   // Moderate roughness for a soft shine
             metalness: 0.0,   // Non-metallic
           });
-
-        console.log("mesh",this.mesh);
+        this.mesh.material = marbleMaterial
+        // console.log("mesh"s,this.mesh);
         this.parent3D.add(this.mesh)
 
     }

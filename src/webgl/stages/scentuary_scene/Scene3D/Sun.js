@@ -6,7 +6,7 @@ import GeomUtils from "../../../core/utils/GeomUtils"
 
 class Sun{
     constructor (obj){
-        console.log("(Sun.CONSTRUCTORA): ", obj)
+        // console.log("(Sun.CONSTRUCTORA): ", obj)
         this.app = obj.app
         this.project = obj.project
         this.stage = obj.stage

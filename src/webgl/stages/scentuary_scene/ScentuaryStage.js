@@ -5,8 +5,9 @@ import EasedOutValue from "../../core/utils/EasedOutValue"
 
 import StageSuper from '../StageSuper'
 
-import StageCamera from "./StageCamera"
+import StageCamera from "./StageCamera/StageCamera"
 import Scene3D from "./Scene3D/Scene3D"
+import CameraManager from "./CameraManager"
 
 
 class ScentuaryStage extends StageSuper{
@@ -48,8 +49,9 @@ class ScentuaryStage extends StageSuper{
         // LOADING MANIFEST:
         this.loader.add_gltf("scene", this.app.loader_pathPrefix+"glbs/scentuary_scene.glb", true)
         // this.loader.add_texture("petals", this.app.loader_pathPrefix+"img/single_petal.png", true)
-        // this.loader.add_texture("petals9", this.app.loader_pathPrefix+"img/petals9_white.png", true)
-
+        this.loader.add_texture("floor", this.app.loader_pathPrefix+"img/bakings/floor_1k.jpg", true)
+        this.loader.add_texture("walls", this.app.loader_pathPrefix+"img/bakings/walls_4k.jpg", true)
+        this.loader.add_hdr("sky", this.app.loader_pathPrefix+"hdr/sky_4k.hdr", true)
         
         //------------------------------
         this.app.emitter.on("onAppScrollUpdate",(e)=>{
@@ -75,7 +77,13 @@ class ScentuaryStage extends StageSuper{
         this.scene.add( this.gridHelper );
         this.app.register_helper(this.gridHelper)
         //------------------- 
+        const pmremGenerator = new THREE.PMREMGenerator(this.app.render.renderer);
+        pmremGenerator.compileEquirectangularShader();
+        const hdrTexture = this.loader.get_hdr("sky")
+        const envMap = pmremGenerator.fromEquirectangular(hdrTexture).texture;
 
+        // this.app.scene.environment = envMap;
+        this.app.scene.background = envMap; // this makes it your skybox
 
         //------------------- 
         this.scentuaryScene = new Scene3D({
@@ -83,6 +91,11 @@ class ScentuaryStage extends StageSuper{
             project:this.project,
             stage:this,
             parent3D:this.world3D
+        })
+        this.cameraManager = new CameraManager({
+            app:this.app,
+            project:this.project,
+            stage:this,
         })
 
         //------------------- 

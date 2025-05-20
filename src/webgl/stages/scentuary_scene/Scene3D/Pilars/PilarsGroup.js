@@ -11,7 +11,7 @@ class PilarsGroup{
         this.stage = obj.stage
         this.parent3D = obj.parent3D
         //-----------------------------
-        this.ITEM_MANIFEST = ["pilar1", "pilar2", "pilar3", "pilar4", "pilar5", "pilar6", "pilar7", "pilar8", "pilar9"]
+        this.ITEM_MANIFEST = ["pilar1", "pilar2", "pilar3", "pilar4", "pilar5", "pilar6", "pilar7", "pilar8"]
         this.ITEMS_REF = []
         this.ITEM_MANIFEST.map((itemId)=>{
             const item = new Pilar3D({

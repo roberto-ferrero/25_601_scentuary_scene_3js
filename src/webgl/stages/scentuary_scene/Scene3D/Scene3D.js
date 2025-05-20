@@ -3,6 +3,10 @@ import * as THREE from 'three'
 
 import Sun from "./Sun"
 import PilarsGroup from "./Pilars/PilarsGroup"
+import Walls3D from './Walls/Walls3D'
+import Floor3D from './Floor/Floor3D'
+import Stairs3D from './Stairs/Stairs3D'
+import PointLight3D from './PointLight3D'
 
 class Scene3D{
     constructor (obj){
@@ -23,11 +27,38 @@ class Scene3D{
             parent3D:this.cont3D,
             mesh:this.stage.get_mesh_from_GLB_PROJECT("sun")
         })
+        //---------------------------
+        // LIGHTS:
+        const dev_ambientLight = new THREE.AmbientLight(0xffffff, 0.7); // Soft white light
+        this.parent3D.add(dev_ambientLight);
         //---
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.3); // Soft white light
-        this.parent3D.add(ambientLight);
-        //---
+        this.dev_pointLight = new PointLight3D({
+            app:this.app,
+            project:this.project,
+            stage:this.stage,
+            parent3D:this.cont3D,
+        })
+        //---------------------------
+        // ITEMS:
+        this.floor = new Floor3D({
+            app:this.app,
+            project:this.project,
+            stage:this.stage,
+            parent3D:this.cont3D
+        })
+        this.stairs = new Stairs3D({
+            app:this.app,
+            project:this.project,
+            stage:this.stage,
+            parent3D:this.cont3D
+        })
         this.pilars = new PilarsGroup({
+            app:this.app,
+            project:this.project,
+            stage:this.stage,
+            parent3D:this.cont3D
+        })
+        this.walls = new Walls3D({
             app:this.app,
             project:this.project,
             stage:this.stage,
