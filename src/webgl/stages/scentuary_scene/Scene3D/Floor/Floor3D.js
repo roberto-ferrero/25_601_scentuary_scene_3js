@@ -14,10 +14,18 @@ class Floor3D{
         this.mesh = this.stage.get_mesh_from_GLB_PROJECT(this.itemId)
         this.texture = this.stage.loader.get_texture("floor")
         this.texture.flipY = false;
+        this.texture_ao = this.stage.loader.get_texture("floor_ao")
+        this.texture_ao.flipY = false;
+        this.texture_light = this.stage.loader.get_texture("floor_shadow")
+        this.texture_light.flipY = false;
         const marbleMaterial = new THREE.MeshStandardMaterial({
             map: this.texture, // Use the loaded texture
-            color: 0xF6F1E7, // Ivory base color
-            roughness: 0.4,   // Moderate roughness for a soft shine
+            aoMap: this.texture_ao,
+            aoMapIntensity: 1.0,
+            lightMap: this.texture_light,
+            lightMapIntensity: 0.5,
+            // color: s0xF6F1E7, // Ivory base color
+            roughness: 0.45,   // Moderate roughness for a soft shine
             metalness: 0.0,   // Non-metallic
           });
         this.mesh.material = marbleMaterial

@@ -12,8 +12,11 @@ class Stairs3D{
         this.itemId = "stairs"
         //-----------------------------
         this.mesh = this.stage.get_mesh_from_GLB_PROJECT(this.itemId)
+        this.texture = this.stage.loader.get_texture("stairs")
+        this.texture.flipY = false;
         const marbleMaterial = new THREE.MeshStandardMaterial({
-            color: 0xF6F1E7, // Ivory base color
+            map: this.texture, // Use the loaded texture
+            // color: 0xF6F1E7, // Ivory base color
             roughness: 0.4,   // Moderate roughness for a soft shine
             metalness: 0.0,   // Non-metallic
           });

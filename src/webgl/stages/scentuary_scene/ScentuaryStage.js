@@ -49,7 +49,13 @@ class ScentuaryStage extends StageSuper{
         // LOADING MANIFEST:
         this.loader.add_gltf("scene", this.app.loader_pathPrefix+"glbs/scentuary_scene.glb", true)
         // this.loader.add_texture("petals", this.app.loader_pathPrefix+"img/single_petal.png", true)
+        this.loader.add_texture("pilars", this.app.loader_pathPrefix+"img/bakings/pilars_4k.jpg", true)
+        this.loader.add_texture("pilars_ao", this.app.loader_pathPrefix+"img/bakings/pilars_ao_4k.jpg", true)
+
+        this.loader.add_texture("stairs", this.app.loader_pathPrefix+"img/bakings/stairs_1k.jpg", true)
         this.loader.add_texture("floor", this.app.loader_pathPrefix+"img/bakings/floor_1k.jpg", true)
+        this.loader.add_texture("floor_ao", this.app.loader_pathPrefix+"img/bakings/floor_ao_1k.jpg", true)
+        this.loader.add_texture("floor_shadow", this.app.loader_pathPrefix+"img/bakings/floor_shadow_1k.jpg", true)
         this.loader.add_texture("walls", this.app.loader_pathPrefix+"img/bakings/walls_4k.jpg", true)
         this.loader.add_hdr("sky", this.app.loader_pathPrefix+"hdr/sky_4k.hdr", true)
         

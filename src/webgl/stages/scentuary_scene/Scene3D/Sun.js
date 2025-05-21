@@ -17,7 +17,8 @@ class Sun{
         this.ORIGIN = new THREE.Vector3(0, 0, 0)
         this.POSITION = new THREE.Vector3().copy(this.app.filter_blender_position(this.mesh.position))
         // this.COLOR = new THREE.Color(0xffe92b)
-        this.COLOR = new THREE.Color(0xff09ff)
+        // this.COLOR = new THREE.Color(0xff09ff)
+        this.COLOR = new THREE.Color(0xe6b490)
         this.ELEVATION = GeomUtils.get_elevation(this.ORIGIN, this.POSITION)
         this.AZIMUTH = GeomUtils.get_azimuth(this.ORIGIN, this.POSITION)
         //--
@@ -26,7 +27,7 @@ class Sun{
         this.app.register_helper(this.sun_helper)
         this.parent3D.add(this.sun_helper)
         //------------
-        this.sunLight = new THREE.DirectionalLight(this.COLOR, 1)
+        this.sunLight = new THREE.DirectionalLight(this.COLOR, 0.6)
         this.sunLight.position.copy(this.POSITION)
         this.sunLight.target.position.copy(this.ORIGIN)
         this.sunLight.target.updateMatrixWorld()    
