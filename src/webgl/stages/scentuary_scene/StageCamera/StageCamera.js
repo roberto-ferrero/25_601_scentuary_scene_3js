@@ -4,7 +4,7 @@ import MeshUtils from '../../../core/utils/MeshUtils'
 
 import CameraSpots from "./CameraSpots"
 
-// import LensFlare from './LensFlare/LensFlare'
+import LensFlare from './LensFlare/LensFlare'
 
 class StageCamera{
     constructor (obj){ 
@@ -65,7 +65,7 @@ class StageCamera{
 
         // this.TARGET_PROGRESS = 0
         this.HOLDER_REF_POSITION = new THREE.Vector3()
-        this.LENSFLARE_DISTANCE = 100
+        this.LENSFLARE_DISTANCE = -0.12
         this.CURRENT_PAN_AZIMUTH = 0
         this.CURRENT_PAN_ELEVATION = 0
         //-----------------------------
@@ -98,25 +98,23 @@ class StageCamera{
         // this.pos_helper.position.set(0, 0, -100)
         // this.camera.add(this.pos_helper)
         //------------
-        // if(this.stage.USE_LENSFLARE){
-        //     this.lensFlare = new LensFlare({
-        //         app:this.app,
-        //         project:this.project,
-        //         stage:this.stage,
-        //         parent3D:this.camera,
-        //         stageCamera:this,
-        //         width: this.app.size.REF.width,
-        //         height: this.app.size.REF.height,
-        //         progress: 0,
-        //         USE_MOUSE: false,
-        //         X_RANGE: [-2, 2], 
-        //         Y_RANGE: [0.0, -0.4], 
-        //     })
-        //     //--
-        //     this.app.emitter.on("onAppSizeUpdate", ()=>{
-        //         this._update_lensflareScale()
-        //     })
-        // }
+        this.lensFlare = new LensFlare({
+            app:this.app,
+            project:this.project,
+            stage:this.stage,
+            parent3D:this.camera,
+            stageCamera:this,
+            width: this.app.size.REF.width,
+            height: this.app.size.REF.height,
+            progress: 0,
+            USE_MOUSE: false,
+            X_RANGE: [-2, 2], 
+            Y_RANGE: [0.0, -0.4], 
+        })
+        //--
+        this.app.emitter.on("onAppSizeUpdate", ()=>{
+            this._update_lensflareScale()
+        })
         //------------
         //--
         this.BUILT = true
@@ -214,41 +212,42 @@ class StageCamera{
         // this._update_positions()
         // this._update_pan()
         // this._update_camera_data()
-        // if(this.lensFlare) this._update_lensFlare()
-        // if(this.lensFlare) this._update_lensflareScale()
+        this._update_lensFlare()
+        this._update_lensflareScale()
         // if(this.bgPlane) this._update_bgPlane()
         //--
         this.camera.updateProjectionMatrix();
+        console.log("this.camera.rotation: ", this.camera.rotation);
     }
-    // _update_lensflareScale(){
-    //     const dimensions = this._get_planeSizeAtDistance(this.camera, this.LENSFLARE_DISTANCE)
-    //     // console.log("dimensions: ", dimensions);
-    //     const xscale = dimensions.width/this.app.size.REF.width
-    //     const yscale = dimensions.height/this.app.size.REF.height
-    //     // console.log("xscale: ", xscale, " yscale: ", yscale);
-    //     this.lensFlare.cont3D.scale.set(xscale, yscale, 1)
-    // }
-    // _update_lensFlare(){
-    //     // const distance = 1;
-    //     // const cameraWorldPosition = new THREE.Vector3();
-    //     // this.camera.getWorldPosition(cameraWorldPosition);
-    //     // const cameraDirection = new THREE.Vector3();
-    //     // this.camera.getWorldDirection(cameraDirection);
+    _update_lensflareScale(){
+        const dimensions = this._get_planeSizeAtDistance(this.camera, this.LENSFLARE_DISTANCE)
+        // console.log("dimensions: ", dimensions);
+        const xscale = dimensions.width/this.app.size.REF.width
+        const yscale = dimensions.height/this.app.size.REF.height
+        // console.log("xscale: ", xscale, " yscale: ", yscale);
+        this.lensFlare.cont3D.scale.set(xscale, yscale, 1)
+    }
+    _update_lensFlare(){
+        // const distance = 1;
+        // const cameraWorldPosition = new THREE.Vector3();
+        // this.camera.getWorldPosition(cameraWorldPosition);
+        // const cameraDirection = new THREE.Vector3();
+        // this.camera.getWorldDirection(cameraDirection);
 
-    //     // // Step 2: Calculate the new position for cont3D
-    //     // const lensFlarePosition = new THREE.Vector3();
-    //     // lensFlarePosition.copy(cameraWorldPosition).add(cameraDirection.multiplyScalar(distance));
+        // // Step 2: Calculate the new position for cont3D
+        // const lensFlarePosition = new THREE.Vector3();
+        // lensFlarePosition.copy(cameraWorldPosition).add(cameraDirection.multiplyScalar(distance));
 
-    //     // // Step 3: Update cont3D's position and make it look at the camera
-    //     // this.lensFlare.cont3D.position.copy(lensFlarePosition);
-    //     // this.lensFlare.cont3D.lookAt(cameraWorldPosition);
-    //     this.lensFlare.cont3D.position.set(0, 0, -this.LENSFLARE_DISTANCE)
-    //     const lensScale = 1;
-    //     this.lensFlare.cont3D.scale.set(lensScale, lensScale, lensScale);
-    //     //--
-    //     this.lensFlare.update_RAF()
-    //     this.lensFlare.update_progress(this.CAMERA_PROGRESS)
-    // }
+        // // Step 3: Update cont3D's position and make it look at the camera
+        // this.lensFlare.cont3D.position.copy(lensFlarePosition);
+        // this.lensFlare.cont3D.lookAt(cameraWorldPosition);
+        this.lensFlare.cont3D.position.set(0, 0, this.LENSFLARE_DISTANCE)
+        const lensScale = 1;
+        this.lensFlare.cont3D.scale.set(lensScale, lensScale, lensScale);
+        //--
+        this.lensFlare.update_RAF()
+        this.lensFlare.update_progress(this.camera.rotation.x, this.camera.rotation.y)
+    }
 
     _update_pan(REF_POSITION){
         // console.log("this.stage.MOUSE_PAN_FACTOR_EASED.get()", this.stage.MOUSE_PAN_FACTOR_EASED.get());
