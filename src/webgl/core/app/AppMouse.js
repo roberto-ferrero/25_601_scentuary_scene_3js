@@ -20,6 +20,9 @@ class AppMouse{
             x:0,
             y:0
         }
+        this.POSITION_NORM_V2 = new THREE.Vector2(0, 0) // from -1 to 1
+        //----------
+
         this.POSITION2_NORM = { // from 0 to 1
             x:0,
             y:0
@@ -216,6 +219,7 @@ class AppMouse{
             }else{
                 this.POSITION_NORM.x = 0;
                 this.POSITION_NORM.y = 0;
+                this.POSITION_NORM_V2.set(this.POSITION_NORM.x, this.POSITION_NORM.y);
                 this.POSITION2_NORM.x = 0;
                 this.POSITION2_NORM.y = 0;
                 this.POSITION3_NORM.x = 0;
@@ -332,6 +336,7 @@ class AppMouse{
         if(this.OVER){
             this.POSITION_NORM.x = ((rel_mouse_posX/this.app.size.CURRENT.width)*2)-1;
             this.POSITION_NORM.y = -((rel_mouse_posY/this.app.size.CURRENT.height)*2)+1;
+            this.POSITION_NORM_V2.set(this.POSITION_NORM.x, this.POSITION_NORM.y);
 
             this.POSITION2_NORM.x = (rel_mouse_posX/this.app.size.CURRENT.width);
             this.POSITION2_NORM.y = 1-(rel_mouse_posY/this.app.size.CURRENT.height);
@@ -342,6 +347,7 @@ class AppMouse{
         }else{
             this.POSITION_NORM.x = 0;
             this.POSITION_NORM.y = 0;
+            this.POSITION_NORM_V2.set(this.POSITION_NORM.x, this.POSITION_NORM.y);
             this.POSITION2_NORM.x = 0;
             this.POSITION2_NORM.y = 0;
             this.POSITION3_NORM.x = 0;

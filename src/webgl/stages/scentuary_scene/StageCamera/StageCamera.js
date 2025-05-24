@@ -217,7 +217,7 @@ class StageCamera{
         // if(this.bgPlane) this._update_bgPlane()
         //--
         this.camera.updateProjectionMatrix();
-        console.log("this.camera.rotation: ", this.camera.rotation);
+        // console.log("this.camera.rotation: ", this.camera.rotation);
     }
     _update_lensflareScale(){
         const dimensions = this._get_planeSizeAtDistance(this.camera, this.LENSFLARE_DISTANCE)

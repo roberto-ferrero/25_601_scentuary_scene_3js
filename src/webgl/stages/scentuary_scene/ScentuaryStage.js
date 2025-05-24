@@ -6,9 +6,10 @@ import EasedOutValue from "../../core/utils/EasedOutValue"
 import StageSuper from '../StageSuper'
 
 import StageCamera from "./StageCamera/StageCamera"
-import Scene3D from "./Scene3D/Scene3D"
+import Scenario3D from "./Scenario3D/Scenario3D"
 import CameraManager from "./CameraManager"
 
+//https://github.com/mrdoob/three.js/blob/e32c522ec5086d8c7c12b7cb4b029a222d534225/examples/jsm/objects/Water2.js#L49-L50
 
 class ScentuaryStage extends StageSuper{
     // this.app.project.stage
@@ -21,6 +22,7 @@ class ScentuaryStage extends StageSuper{
         this.PRE_BUILT = false 
         //-------------------
         this.STAGE_SIZE = this.app.size.CURRENT
+        this.SCENT_ARRAY = ["scent1", "scent2", "scent3", "scent4", "scent5", "scent6", "scent7", "scent8"]
         //-------------------
         this.MOUSE_PAN_FACTOR_EASED = new EasedOutValue(1, 0.05, 0.005, this.app.emitter, "onUpdateRAF")
         //--------------------
@@ -48,7 +50,11 @@ class ScentuaryStage extends StageSuper{
         //---------------------
         // LOADING MANIFEST:
         this.loader.add_gltf("scene", this.app.loader_pathPrefix+"glbs/scentuary_scene.glb", true)
-        // this.loader.add_texture("petals", this.app.loader_pathPrefix+"img/single_petal.png", true)
+        this.loader.add_gltf("flower", this.app.loader_pathPrefix+"glbs/flower.glb", true)
+
+        this.loader.add_texture("normalMap0", this.app.loader_pathPrefix+"img/Water_1_M_Normal.jpg", true)
+        this.loader.add_texture("normalMap1", this.app.loader_pathPrefix+"img/Water_2_M_Normal.jpg", true)
+
         this.loader.add_texture("pilars", this.app.loader_pathPrefix+"img/bakings/pilars_4k.jpg", true)
         this.loader.add_texture("pilars_ao", this.app.loader_pathPrefix+"img/bakings/pilars_ao_4k.jpg", true)
 
@@ -57,11 +63,25 @@ class ScentuaryStage extends StageSuper{
         this.loader.add_texture("floor_ao", this.app.loader_pathPrefix+"img/bakings/floor_ao_1k.jpg", true)
         this.loader.add_texture("floor_shadow", this.app.loader_pathPrefix+"img/bakings/floor_shadow_1k.jpg", true)
         this.loader.add_texture("walls", this.app.loader_pathPrefix+"img/bakings/walls_4k.jpg", true)
-        this.loader.add_hdr("sky", this.app.loader_pathPrefix+"hdr/sky_4k.hdr", true)
+
+        this.loader.add_hdr("sky", this.app.loader_pathPrefix+"hdr/sunset_2K_2367bd73-c1f3-420b-8ccc-93b4edf3f246.hdr", true)
+        // this.loader.add_hdr("sky", this.app.loader_pathPrefix+"hdr/sunset2_2K.hdr", true)
         
         //------------------------------
         this.app.emitter.on("onAppScrollUpdate",(e)=>{
             // this.progress.set_GENERAL_PROGRESS(e.scroll.PROGRESS)
+        })
+        this.app.emitter.on("onScentSelected",(e)=>{
+            this.CURRENT_SELECTED_SCENT_ID = e.SCENT_ID
+            // console.log("(ScentuaryStage.onScentSelected): ", e.SCENT_ID);
+        })
+        this.app.emitter.on("onScentRollover",(e)=>{
+            this.CURRENT_ROLLOVER_SCENT_ID = e.SCENT_ID
+            // console.log("(ScentuaryStage.onScentRollover): ", e.SCENT_ID);
+        })
+        this.app.emitter.on("onScentRollout",(e)=>{
+            this.CURRENT_ROLLOVER_SCENT_ID = e.SCENT_ID
+            // console.log("(ScentuaryStage.onScentRollout): ", e.SCENT_ID);
         })
     }
     //----------------------------------------------
@@ -91,12 +111,19 @@ class ScentuaryStage extends StageSuper{
         // this.app.scene.environment = envMap;
         this.app.scene.background = envMap; // this makes it your skybox
 
+        // const geometry = new THREE.BoxGeometry(5000, 5000, 5000);
+        // const materialArray = [/* create materials using CubeTexture */];
+        // const skybox = new THREE.Mesh(geometry, materialArray);
+        // skybox.geometry.scale(1, 1, -1); // Invert the cube
+        // scene.add(skybox);
+
         //------------------- 
-        this.scentuaryScene = new Scene3D({
+        this.scentuaryScene = new Scenario3D({
             app:this.app,
             project:this.project,
             stage:this,
-            parent3D:this.world3D
+            parent3D:this.world3D,
+            
         })
         this.cameraManager = new CameraManager({
             app:this.app,
@@ -167,6 +194,7 @@ class ScentuaryStage extends StageSuper{
     update_RAF(){
         if(this.STARTED){
             this.stageCamera?.update_RAF()
+            this.scentuaryScene?.update_RAF()
         }
     }
     //----------------------------------------------
