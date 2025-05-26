@@ -12,12 +12,17 @@ class CameraManager{
         this.CAMERA_SPOTS = ["spot0", "spot1", "spot2", "spot3", "spot4", "spot5", "spot6", "spot7", "spot8"]
         this.SCENT_ARRAY = this.stage.SCENT_ARRAY
         //------------------------
+        this.app.emitter.on("onScentSelected", (data)=>{
+            this.travelToScent(data.SCENT_ID)
+        })
+        //------------------------
         this.app.dev.gui.add(this, '_dev_nextSpot').name('NEXT CAMERA SPOT')
         this.app.dev.gui.add(this, '_dev_prevSpot').name('PREV CAMERA SPOT')
     }
     //----------------------------------------------
     // PUBLIC:
     travelToScent(scentId){
+        console.log("(CameraManager.travelToScent): ", scentId);
         this.SPOT_POS = this.SCENT_ARRAY.indexOf(scentId)+1
         const spotId = this.CAMERA_SPOTS[this.SPOT_POS]
         this.stage.stageCamera.travelToSpot(spotId)

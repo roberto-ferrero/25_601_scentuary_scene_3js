@@ -21,6 +21,9 @@ class ScentuaryStage extends StageSuper{
         this.STARTED = false
         this.PRE_BUILT = false 
         //-------------------
+        this.CURRENT_SELECTED_SCENT_ID = null
+        this.CURRENT_ROLLOVER_SCENT_ID = null
+        //-------------------
         this.STAGE_SIZE = this.app.size.CURRENT
         this.SCENT_ARRAY = ["scent1", "scent2", "scent3", "scent4", "scent5", "scent6", "scent7", "scent8"]
         //-------------------
@@ -49,8 +52,15 @@ class ScentuaryStage extends StageSuper{
         }
         //---------------------
         // LOADING MANIFEST:
+        this.loader.add_gltf("vegetation", this.app.loader_pathPrefix+"glbs/flower.glb", true)
+        this.loader.add_texture("stem", this.app.loader_pathPrefix+"img/vegetation/stem.png", true)
+        this.loader.add_texture("flower", this.app.loader_pathPrefix+"img/vegetation/flower.png", true)
+
+
+
+        //--------------
+
         this.loader.add_gltf("scene", this.app.loader_pathPrefix+"glbs/scentuary_scene.glb", true)
-        this.loader.add_gltf("flower", this.app.loader_pathPrefix+"glbs/flower.glb", true)
 
         this.loader.add_texture("normalMap0", this.app.loader_pathPrefix+"img/Water_1_M_Normal.jpg", true)
         this.loader.add_texture("normalMap1", this.app.loader_pathPrefix+"img/Water_2_M_Normal.jpg", true)
@@ -73,7 +83,6 @@ class ScentuaryStage extends StageSuper{
         })
         this.app.emitter.on("onScentSelected",(e)=>{
             this.CURRENT_SELECTED_SCENT_ID = e.SCENT_ID
-            // console.log("(ScentuaryStage.onScentSelected): ", e.SCENT_ID);
         })
         this.app.emitter.on("onScentRollover",(e)=>{
             this.CURRENT_ROLLOVER_SCENT_ID = e.SCENT_ID
@@ -91,6 +100,8 @@ class ScentuaryStage extends StageSuper{
         this.stageCamera.init()
     }
     build(){
+        this.VEGETATION_GLB_PROJECT = this.loader.get_gltf("vegetation")
+        //----
         this.GLB_PROJECT = this.loader.get_gltf("scene")
         console.log("this.GLB_PROJECT: ", this.GLB_PROJECT);
         this.stageCamera.build(this.GLB_PROJECT)
@@ -170,9 +181,28 @@ class ScentuaryStage extends StageSuper{
     }
     //----------------------------------------------
     // INTERNAL:
-    get_mesh_from_GLB_PROJECT(meshId){
+    // get_mesh_from_GLB_PROJECT(meshId){
+    //     // console.log("_extract_mesh_from_GLB_PROJECT: ", meshId);
+    //     const mesh = this.GLB_PROJECT.children.find((mesh)=>{
+    //         const result = mesh.name == meshId
+    //         return result
+    //     })
+    //     // console.log("PROJECT mesh: ", mesh);
+    //     // if(mesh){
+    //         if(mesh?.type == "Group"){ // DOC: Algunas veces la exportación de Blender genera un grupo en vez de un mesh. La posicion es del group y de la copiamos al mesh
+    //             const position = mesh.position
+    //             // console.log("!!!");
+    //             // console.log("   mesh: ", mesh);
+    //             const itemMesh = mesh.children[0]
+    //             itemMesh.position.set(position.x, position.y, position.z)
+    //             return itemMesh
+    //         }
+    //     // }
+    //     return mesh
+    // }
+    get_mesh_from_GLB_PROJECT(meshId, PROJECT = this.GLB_PROJECT){
         // console.log("_extract_mesh_from_GLB_PROJECT: ", meshId);
-        const mesh = this.GLB_PROJECT.children.find((mesh)=>{
+        const mesh = PROJECT.children.find((mesh)=>{
             const result = mesh.name == meshId
             return result
         })

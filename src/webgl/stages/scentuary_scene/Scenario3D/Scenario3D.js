@@ -9,6 +9,7 @@ import Stairs3D from './Stairs/Stairs3D'
 import Sea3D from './Sea/Sea3D'
 import PointLight3D from './PointLight3D'
 import MouseInteractions from './MouseInteractions/MouseInteractions'
+import VegetationGroup from './Vegetation/VegetationGroup'
 
 class Scenario3D{
     constructor (obj){
@@ -107,6 +108,14 @@ class Scenario3D{
             parent3D:this.cont3D
         })
 
+        // this.vegetation = new VegetationGroup({
+        //     app:this.app,
+        //     project:this.project,
+        //     stage:this.stage,
+        //     scenario:this,
+        //     parent3D:this.cont3D,
+        // })
+
 
     }
     //----------------------------------------------
@@ -117,6 +126,7 @@ class Scenario3D{
     update_RAF(){
         this.sea.update_RAF()
         this.interactions.update_RAF()
+        this.vegetation?.update_RAF()
     }
     //----------------------------------------------
     // PRIVATE:

@@ -59,7 +59,7 @@ class MouseInteractions{
             }
         })
         this.app.emitter.on("onScentSelected", (data)=>{
-            // console.log("onScentSelected", data);
+            console.log("onScentSelected", data);
             this.CURRENT_SELECTED_SCENT_ID = data.SCENT_ID;
         })
     }
@@ -77,9 +77,9 @@ class MouseInteractions{
     // PRIVATE:
     _update_rollover(){
         const SCENT_ID = this._get_raycaster_object();
-        console.log("SCENT_ID", SCENT_ID);
+        // console.log("SCENT_ID", SCENT_ID);
         if(this.CURRENT_ROLLOVER_SCENT_ID != SCENT_ID){
-            console.log("*1");
+            // console.log("*1");
             if(SCENT_ID == null){
                 const tempId = this.CURRENT_ROLLOVER_SCENT_ID;
                 this.CURRENT_ROLLOVER_SCENT_ID = null;
