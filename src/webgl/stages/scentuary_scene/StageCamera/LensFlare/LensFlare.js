@@ -82,8 +82,9 @@ class LensFlare{
     //----------------------------------------------
     // PUBLIC:
     update_progress(azimuth, elevation){
-        const azimuth_arch = [-4, 4]
-        const elevation_arch = [0, 2.3]
+        // console.log("azimuth: "+ azimuth+", elevation: "+elevation);
+        const azimuth_arch = [-4-Math.PI, 4-Math.PI]
+        const elevation_arch = [0, -2.3]
         this.AZIMOUTH_FACTOR = this._get_rangeFactor(azimuth, azimuth_arch)
         this.ELEVATION_FACTOR = 0.2+this._get_rangeFactor(elevation, elevation_arch)
         // this.ELEVATION_FACTOR = 0.5

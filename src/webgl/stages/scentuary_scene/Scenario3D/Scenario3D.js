@@ -9,6 +9,7 @@ import Stairs3D from './Stairs/Stairs3D'
 import Sea3D from './Sea/Sea3D'
 import PointLight3D from './PointLight3D'
 import MouseInteractions from './MouseInteractions/MouseInteractions'
+import Sun3D from './Sun3D'
 import VegetationGroup from './Vegetation/VegetationGroup'
 
 class Scenario3D{
@@ -38,7 +39,7 @@ class Scenario3D{
         })
         //---------------------------
         // LIGHTS:
-        const dev_ambientLight = new THREE.AmbientLight(0xffffff, 0.9); // Soft white light
+        const dev_ambientLight = new THREE.AmbientLight(0xffffff, 1.5); // Soft white light
         this.parent3D.add(dev_ambientLight);
         //---
         this.dev_pointLight = new PointLight3D({
@@ -48,7 +49,7 @@ class Scenario3D{
             scenario:this,
             parent3D:this.cont3D,
             itemId:"dev_light",
-            pointLight: new THREE.PointLight(0xffffff, 50, 100) // color, intensity, distance
+            pointLight: new THREE.PointLight(0xffffff, 40, 100, 2) // color, intensity, distance
         })
         this.dev_pointLight2 = new PointLight3D({
             app:this.app,
@@ -57,7 +58,16 @@ class Scenario3D{
             scenario:this,
             parent3D:this.cont3D,
             itemId:"dev_light2",
-            pointLight: new THREE.PointLight(0xffdd81, 10, 100) // color, intensity, distance
+            pointLight: new THREE.PointLight(0xffdd81, 20, 100, 3) // color, intensity, distance
+        })
+        this.dev_pointLight3 = new PointLight3D({
+            app:this.app,
+            project:this.project,
+            stage:this.stage,
+            scenario:this,
+            parent3D:this.cont3D,
+            itemId:"dev_light3",
+            pointLight: new THREE.PointLight(0xe9b372, 20, 100, 3) // color, intensity, distance
         })
         //---------------------------
         // HITS :
@@ -107,6 +117,13 @@ class Scenario3D{
             sunColor:this.sun.COLOR,
             parent3D:this.cont3D
         })
+        this.sun3D = new Sun3D({
+            app:this.app,
+            project:this.project,
+            stage:this.stage,
+            scenario:this,
+            parent3D:this.cont3D
+        })
 
         // this.vegetation = new VegetationGroup({
         //     app:this.app,
@@ -126,6 +143,7 @@ class Scenario3D{
     update_RAF(){
         this.sea.update_RAF()
         this.interactions.update_RAF()
+        //--
         this.vegetation?.update_RAF()
     }
     //----------------------------------------------

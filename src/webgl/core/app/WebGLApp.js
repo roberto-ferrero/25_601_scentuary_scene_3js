@@ -150,7 +150,7 @@ class WebGLApp{
     }
 
     activate(){
-        // this.app.trace("(WebGLApp.activate)-------------------------------------------------------!");
+        this.app.trace("(WebGLApp.activate)-------------------------------------------------------!");
         this.ACTIVE = true;
         if(this.BUILT){
             this._update_RAF();
@@ -198,6 +198,9 @@ class WebGLApp{
     // UPDATE RAF:
     _update_RAF(){
         // console.log("(WebGLApp._update_RAF)-----------------!")
+        // console.log("this.state.ACTIVE", this.state.ACTIVE);
+        // console.log("this.state.READY", this.state.READY);
+
         if(!this.ACTIVE)
             return;
 

@@ -12,10 +12,10 @@ class Flower3D{
         this.cont3D = new THREE.Object3D()
         this.parent3D.add(this.cont3D)
         // this.cont3D.position.set(3.1403, 0.46, -0.509)
-        this.cont3D.position.set(-4, 0.34, 1.69)
+        // this.cont3D.position.set(-4, 0.34, 1.69)
         //-------------------
-        this.stem_texture = this.stage.loader.get_texture("stem")
-        this.stem_mesh = this.stage.get_mesh_from_GLB_PROJECT("stem", this.stage.VEGETATION_GLB_PROJECT) 
+        // this.stem_texture = this.stage.loader.get_texture("stem")
+        this.stem_mesh = this.stage.get_mesh_from_GLB_PROJECT("stem1", this.stage.VEGETATION_GLB_PROJECT) 
         this.stem_mesh.material = new THREE.MeshStandardMaterial({
             color: 0x024b07, // 
             transparent: true,

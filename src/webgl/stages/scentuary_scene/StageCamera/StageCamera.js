@@ -72,7 +72,7 @@ class StageCamera{
         this.raycaster = new THREE.Raycaster();
         this.mouseV2 = new THREE.Vector2();
         //-----------------------------
-        this.camera = new THREE.PerspectiveCamera(22, this.app.size.CURRENT.aspect, 0.1, 100);
+        this.camera = new THREE.PerspectiveCamera(22, this.app.size.CURRENT.aspect, 0.1, 1000);
         this.camera.name = "main_camera"
         this._create_structure()
         //-----------------------------

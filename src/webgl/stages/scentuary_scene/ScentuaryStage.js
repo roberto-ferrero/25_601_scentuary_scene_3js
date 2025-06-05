@@ -8,6 +8,7 @@ import StageSuper from '../StageSuper'
 import StageCamera from "./StageCamera/StageCamera"
 import Scenario3D from "./Scenario3D/Scenario3D"
 import CameraManager from "./CameraManager"
+import SpotsLib from "./Scenario3D/SpotsLib"
 
 //https://github.com/mrdoob/three.js/blob/e32c522ec5086d8c7c12b7cb4b029a222d534225/examples/jsm/objects/Water2.js#L49-L50
 
@@ -36,6 +37,7 @@ class ScentuaryStage extends StageSuper{
         // BASIC STRUCTURE:
         this.world3D = new THREE.Object3D()
         this.world3D.name = "world3D"
+        // this.world3D.rotation.set(0, Math.PI*0.2, 0) //
         this.scene.name = "stage_scene"
         this.scene.add(this.world3D)
         //------------------------
@@ -69,12 +71,16 @@ class ScentuaryStage extends StageSuper{
         this.loader.add_texture("pilars_ao", this.app.loader_pathPrefix+"img/bakings/pilars_ao_4k.jpg", true)
 
         this.loader.add_texture("stairs", this.app.loader_pathPrefix+"img/bakings/stairs_1k.jpg", true)
-        this.loader.add_texture("floor", this.app.loader_pathPrefix+"img/bakings/floor_1k.jpg", true)
+        // this.loader.add_texture("floor", this.app.loader_pathPrefix+"img/bakings/floor_no_pilars_2k.jpg", true)
+        this.loader.add_texture("floor", this.app.loader_pathPrefix+"img/bakings/floor_2k.jpg", true)
         this.loader.add_texture("floor_ao", this.app.loader_pathPrefix+"img/bakings/floor_ao_1k.jpg", true)
         this.loader.add_texture("floor_shadow", this.app.loader_pathPrefix+"img/bakings/floor_shadow_1k.jpg", true)
         this.loader.add_texture("walls", this.app.loader_pathPrefix+"img/bakings/walls_4k.jpg", true)
 
-        this.loader.add_hdr("sky", this.app.loader_pathPrefix+"hdr/sunset_2K_2367bd73-c1f3-420b-8ccc-93b4edf3f246.hdr", true)
+        // this.loader.add_hdr("sky", this.app.loader_pathPrefix+"hdr/sunset_2K_2367bd73-c1f3-420b-8ccc-93b4edf3f246.hdr", true)
+        // this.loader.add_hdr("sky", this.app.loader_pathPrefix+"hdr/syferfontein-1d-clear-pure-sky_2K_b7844629-ae4f-40d3-a4ca-c6a75946629c.hdr", true)
+        // this.loader.add_hdr("sky", this.app.loader_pathPrefix+"hdr/tranquil-shorizon-sunset_4K_18d64fa0-51da-4ec1-9441-da453cfd3590.hdr", true)
+        this.loader.add_hdr("sky", this.app.loader_pathPrefix+"hdr/tranquil-horizon-sunset_4K_18d64fa0-51da-4ec1-9441-da453cfd3590_centered.hdr", true)
         // this.loader.add_hdr("sky", this.app.loader_pathPrefix+"hdr/sunset2_2K.hdr", true)
         
         //------------------------------
@@ -101,6 +107,7 @@ class ScentuaryStage extends StageSuper{
     }
     build(){
         this.VEGETATION_GLB_PROJECT = this.loader.get_gltf("vegetation")
+        console.log("this.VEGETATION_GLB_PROJECT: ", this.VEGETATION_GLB_PROJECT);
         //----
         this.GLB_PROJECT = this.loader.get_gltf("scene")
         console.log("this.GLB_PROJECT: ", this.GLB_PROJECT);
@@ -119,8 +126,9 @@ class ScentuaryStage extends StageSuper{
         const hdrTexture = this.loader.get_hdr("sky")
         const envMap = pmremGenerator.fromEquirectangular(hdrTexture).texture;
 
-        // this.app.scene.environment = envMap;
+        this.app.scene.environment = envMap;
         this.app.scene.background = envMap; // this makes it your skybox
+        // this.app.scene.backgroundIntensity = .2
 
         // const geometry = new THREE.BoxGeometry(5000, 5000, 5000);
         // const materialArray = [/* create materials using CubeTexture */];
@@ -129,6 +137,11 @@ class ScentuaryStage extends StageSuper{
         // scene.add(skybox);
 
         //------------------- 
+        this.spots = new SpotsLib({
+            app:this.app,
+            project:this.project,
+            stage:this,
+        })
         this.scentuaryScene = new Scenario3D({
             app:this.app,
             project:this.project,
@@ -210,14 +223,15 @@ class ScentuaryStage extends StageSuper{
         // if(mesh){
             if(mesh?.type == "Group"){ // DOC: Algunas veces la exportación de Blender genera un grupo en vez de un mesh. La posicion es del group y de la copiamos al mesh
                 const position = mesh.position
-                // console.log("!!!");
+                console.log("Group!!");
                 // console.log("   mesh: ", mesh);
                 const itemMesh = mesh.children[0]
                 itemMesh.position.set(position.x, position.y, position.z)
                 return itemMesh
             }
         // }
-        return mesh
+        console.log("mesh: ", mesh);
+        return mesh.clone()
     }
     //----------------------------------------------
     // UPDATES:
