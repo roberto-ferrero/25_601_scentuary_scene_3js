@@ -17,16 +17,16 @@ class Floor3D{
         this.texture.flipY = false;
         this.texture_ao = this.stage.loader.get_texture("floor_ao")
         this.texture_ao.flipY = false;
-        this.texture_light = this.stage.loader.get_texture("floor_shadow")
-        this.texture_light.flipY = false;
+        // this.texture_light = this.stage.loader.get_texture("floor_shadow")
+        // this.texture_light.flipY = false;
         const marbleMaterial = new THREE.MeshStandardMaterial({
             map: this.texture, // Use the loaded texture
-            // aoMap: this.texture_ao,
-            // aoMapIntensity: 1.0,
+            aoMap: this.texture_ao,
+            aoMapIntensity: 1.0,
             // lightMap: this.texture_light,
             // lightMapIntensity: 0.5,
             color: this.scenario.BESE_MARGEL_COLOR, // Ivory base color
-            roughness: 0.4,   // Moderate roughness for a soft shine
+            roughness: 0.5,   // Moderate roughness for a soft shine
             metalness: 0.0,   // Non-metallic
             
           });
@@ -43,7 +43,7 @@ class Floor3D{
     // EVENTS:
 
     //----------------------------------------------
-    // PRIVATE:
+    // PRIVATE:a
 
     //----------------------------------------------
     // AUX:

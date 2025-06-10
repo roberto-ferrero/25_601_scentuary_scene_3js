@@ -10,43 +10,73 @@ class CameraManager{
         //------------------------
         this.SPOT_POS = 0
         this.CAMERA_SPOTS = ["spot0", "spot1", "spot2", "spot3", "spot4", "spot5", "spot6", "spot7", "spot8"]
-        this.SCENT_ARRAY = this.stage.SCENT_ARRAY
+        //------------------------
+        this.SPOT_LINKS ={
+            "spot1": "scent1",
+            "spot2": "scent2",
+            "spot3": "scent3",
+            "spot4": "scent4",
+            "spot5": "scent5",
+            "spot6": "scent6",
+            "spot7": "scent7",
+            "spot8": "scent8",
+        }
         //------------------------
         this.app.emitter.on("onScentSelected", (data)=>{
-            this.travelToScent(data.SCENT_ID)
-        })
+            console.log("(CameraManager.onScentSelected): ", data.SCENT_ID);
+            const spotId = this._get_SPOT(data.SCENT_ID)
+            this.SPOT_POS = this.CAMERA_SPOTS.indexOf(spotId)
+            this.stage.stageCamera.travelToSpot(spotId)
+        })  
         //------------------------
         this.app.dev.gui.add(this, '_dev_nextSpot').name('NEXT CAMERA SPOT')
         this.app.dev.gui.add(this, '_dev_prevSpot').name('PREV CAMERA SPOT')
     }
     //----------------------------------------------
     // PUBLIC:
-    travelToScent(scentId){
-        console.log("(CameraManager.travelToScent): ", scentId);
-        this.SPOT_POS = this.SCENT_ARRAY.indexOf(scentId)+1
-        const spotId = this.CAMERA_SPOTS[this.SPOT_POS]
-        this.stage.stageCamera.travelToSpot(spotId)
-    }
     //----------------------------------------------
     // EVENTS:
 
     //----------------------------------------------
+    _get_SCENT(spotId){
+        // PUBLIC:
+        // Returns the SCENT_ID for a given camera spot
+        if (this.SPOT_LINKS[spotId]) {
+            return this.SPOT_LINKS[spotId];
+        } else {
+            //console.warn(`No SCENT_ID found for spot: ${spotId}`);
+            return null;
+        }   
+    }
+    _get_SPOT(scentId){
+        // PUBLIC:
+        // Returns the camera spot for a given SCENT_ID
+        const spot = this.CAMERA_SPOTS.find(spot => this._get_SCENT(spot) === scentId);
+        if (spot) {
+            return spot;
+        } else {
+            //console.warn(`No camera spot found for SCENT_ID: ${scentId}`);
+            return null;
+        }
+    }
+    //----------------------------------------------
     _dev_nextSpot(){
         // PRIVATE:
-        this.SPOT_POS++
-        if (this.SPOT_POS >= this.CAMERA_SPOTS.length) {
-            this.SPOT_POS = 0
+        console.log("(CameraManager._dev_nextSpot): ", this.SPOT_POS);
+        const nextSpot = this.SPOT_POS+1
+        if (nextSpot >= this.CAMERA_SPOTS.length) {
+            nextSpot = 0
         }
-        const spotId = this.CAMERA_SPOTS[this.SPOT_POS]
-        this.stage.stageCamera.travelToSpot(spotId)
+        const scentId = this._get_SCENT(this.CAMERA_SPOTS[nextSpot])
+        this.stage.selectScent(scentId)
     }
     _dev_prevSpot(){
-        this.SPOT_POS--
-        if (this.SPOT_POS < 0) {
-            this.SPOT_POS = this.CAMERA_SPOTS.length - 1
+        const nextSpot = this.SPOT_POS-1
+        if (nextSpot >= this.CAMERA_SPOTS.length) {
+            nextSpot = 0
         }
-        const spotId = this.CAMERA_SPOTS[this.SPOT_POS]
-        this.stage.stageCamera.travelToSpot(spotId)
+        const scentId = this._get_SCENT(this.CAMERA_SPOTS[nextSpot])
+        this.stage.selectScent(scentId)
     }
     //----------------------------------------------
     // AUX:

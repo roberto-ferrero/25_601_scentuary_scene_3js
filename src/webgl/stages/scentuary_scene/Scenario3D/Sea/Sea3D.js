@@ -22,7 +22,7 @@ class Sea3D{
             flowY: 1
         };
         //-----------------------------
-        this.mesh = this.stage.get_mesh_from_GLB_PROJECT(this.itemId)
+        // this.mesh = this.stage.get_mesh_from_GLB_PROJECT(this.itemId)
         //---
         const seaGeometry = new THREE.PlaneGeometry(100, 400, 10, 100) // Replace size if needed
 

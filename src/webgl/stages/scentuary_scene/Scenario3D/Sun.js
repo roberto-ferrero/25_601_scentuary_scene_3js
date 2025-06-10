@@ -13,6 +13,8 @@ class Sun{
         this.parent3D = obj.parent3D
         this.mesh = obj.mesh
         this.mesh.position.copy(this.app.filter_blender_position(this.mesh.position))
+        console.log("this.mesh.position: ", this.mesh.position);
+        this.mesh.position.y = this.mesh.position.y+9
         //--
         this.ORIGIN = new THREE.Vector3(0, 0, 0)
         this.POSITION = new THREE.Vector3().copy(this.app.filter_blender_position(this.mesh.position))

@@ -20,8 +20,9 @@ class HitBox3D{
         //--
         const material = new THREE.MeshStandardMaterial({
             transparent: true,
-            wireframe:true,
+            //wireframe:true,
             opacity: 0, // Fully opaque
+            depthWrite: false, // Disable depth writing
             color: this.scenario.BESE_MARGEL_COLOR, // Ivory base color
           });
         this.mesh.name = this.SCENT_ID

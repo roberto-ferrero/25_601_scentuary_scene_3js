@@ -11,6 +11,7 @@ import PointLight3D from './PointLight3D'
 import MouseInteractions from './MouseInteractions/MouseInteractions'
 import Sun3D from './Sun3D'
 import VegetationGroup from './Vegetation/VegetationGroup'
+import SpiralFx from './SpiralFX/SpiralFx'
 
 class Scenario3D{
     constructor (obj){
@@ -20,7 +21,8 @@ class Scenario3D{
         this.stage = obj.stage
         this.parent3D = obj.parent3D
         //-----------------------------
-        this.BESE_MARGEL_COLOR = 0xffe8b1
+        // this.BESE_MARGEL_COLOR = 0xffe8b1
+        this.BESE_MARGEL_COLOR = 0xfef0ce
         //-----------------------------
         this.cont3D = new THREE.Object3D()
         this.cont3D.name = "scenario3D"
@@ -125,6 +127,14 @@ class Scenario3D{
             parent3D:this.cont3D
         })
 
+        this.spiralFx = new SpiralFx({
+            app:this.app,
+            project:this.project,
+            stage:this.stage,
+            scenario:this,
+            parent3D:this.cont3D
+        })
+
         // this.vegetation = new VegetationGroup({
         //     app:this.app,
         //     project:this.project,
@@ -143,6 +153,7 @@ class Scenario3D{
     update_RAF(){
         this.sea.update_RAF()
         this.interactions.update_RAF()
+        this.spiralFx.update_RAF()
         //--
         this.vegetation?.update_RAF()
     }

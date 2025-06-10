@@ -67,15 +67,45 @@ class ScentuaryStage extends StageSuper{
         this.loader.add_texture("normalMap0", this.app.loader_pathPrefix+"img/Water_1_M_Normal.jpg", true)
         this.loader.add_texture("normalMap1", this.app.loader_pathPrefix+"img/Water_2_M_Normal.jpg", true)
 
-        this.loader.add_texture("pilars", this.app.loader_pathPrefix+"img/bakings/pilars_4k.jpg", true)
+        // this.loader.add_texture("pilars", this.app.loader_pathPrefix+"img/bakings/pilars_4k.jpg", true)
+        this.loader.add_texture("pilar1", this.app.loader_pathPrefix+"img/bakings/pilar1_1k.jpg", true)
+        this.loader.add_texture("pilar1_ao", this.app.loader_pathPrefix+"img/bakings/pilar1_ao_05k.jpg", true)
+
+        this.loader.add_texture("pilar2", this.app.loader_pathPrefix+"img/bakings/pilar2_1k.jpg", true)
+        this.loader.add_texture("pilar2_ao", this.app.loader_pathPrefix+"img/bakings/pilar2_ao_05k.jpg", true)
+
+        this.loader.add_texture("pilar3", this.app.loader_pathPrefix+"img/bakings/pilar3_1k.jpg", true)
+        this.loader.add_texture("pilar3_ao", this.app.loader_pathPrefix+"img/bakings/pilar3_ao_05k.jpg", true)
+
+        this.loader.add_texture("pilar4", this.app.loader_pathPrefix+"img/bakings/pilar4_1k.jpg", true)
+        this.loader.add_texture("pilar4_ao", this.app.loader_pathPrefix+"img/bakings/pilar4_ao_05k.jpg", true)
+
+        this.loader.add_texture("pilar5", this.app.loader_pathPrefix+"img/bakings/pilar5_1k.jpg", true)
+        this.loader.add_texture("pilar5_ao", this.app.loader_pathPrefix+"img/bakings/pilar5_ao_05k.jpg", true)
+
+        this.loader.add_texture("pilar6", this.app.loader_pathPrefix+"img/bakings/pilar6_1k.jpg", true)
+        this.loader.add_texture("pilar6_ao", this.app.loader_pathPrefix+"img/bakings/pilar6_ao_05k.jpg", true)
+
+        this.loader.add_texture("pilar7", this.app.loader_pathPrefix+"img/bakings/pilar7_1k.jpg", true)
+        this.loader.add_texture("pilar7_ao", this.app.loader_pathPrefix+"img/bakings/pilar7_ao_05k.jpg", true)
+
+        this.loader.add_texture("pilar8", this.app.loader_pathPrefix+"img/bakings/pilar8_1k.jpg", true)
+        this.loader.add_texture("pilar8_ao", this.app.loader_pathPrefix+"img/bakings/pilar8_ao_05k.jpg", true)
+
         this.loader.add_texture("pilars_ao", this.app.loader_pathPrefix+"img/bakings/pilars_ao_4k.jpg", true)
 
         this.loader.add_texture("stairs", this.app.loader_pathPrefix+"img/bakings/stairs_1k.jpg", true)
         // this.loader.add_texture("floor", this.app.loader_pathPrefix+"img/bakings/floor_no_pilars_2k.jpg", true)
+
         this.loader.add_texture("floor", this.app.loader_pathPrefix+"img/bakings/floor_2k.jpg", true)
-        this.loader.add_texture("floor_ao", this.app.loader_pathPrefix+"img/bakings/floor_ao_1k.jpg", true)
-        this.loader.add_texture("floor_shadow", this.app.loader_pathPrefix+"img/bakings/floor_shadow_1k.jpg", true)
+        this.loader.add_texture("floor_ao", this.app.loader_pathPrefix+"img/bakings/floor_ao_2k.jpg", true)
+
+        // this.loader.add_texture("floor_shadow", this.app.loader_pathPrefix+"img/bakings/floor_shadow_1k.jpg", true)
         this.loader.add_texture("walls", this.app.loader_pathPrefix+"img/bakings/walls_4k.jpg", true)
+        this.loader.add_texture("walls_ao", this.app.loader_pathPrefix+"img/bakings/walls_ao_4k.jpg", true)
+        this.loader.add_texture("goldenframe", this.app.loader_pathPrefix+"img/bakings/goldenframe_2k.jpg", true)
+
+        this.loader.add_texture("spiral_sparkle", this.app.loader_pathPrefix+"img/sparkle.png", true)
 
         // this.loader.add_hdr("sky", this.app.loader_pathPrefix+"hdr/sunset_2K_2367bd73-c1f3-420b-8ccc-93b4edf3f246.hdr", true)
         // this.loader.add_hdr("sky", this.app.loader_pathPrefix+"hdr/syferfontein-1d-clear-pure-sky_2K_b7844629-ae4f-40d3-a4ca-c6a75946629c.hdr", true)
@@ -98,6 +128,17 @@ class ScentuaryStage extends StageSuper{
             this.CURRENT_ROLLOVER_SCENT_ID = e.SCENT_ID
             // console.log("(ScentuaryStage.onScentRollout): ", e.SCENT_ID);
         })
+    }
+    //----------------------------------------------
+    // PUBLIC API:
+    selectScent(scentId){
+        // console.log("(ScentuaryStage.selectScent): ", scentId);
+        if(this.CURRENT_SELECTED_SCENT_ID != scentId){
+            this.CURRENT_SELECTED_SCENT_ID = scentId
+            this.app.emitter.emit("onScentSelected", {
+                SCENT_ID: scentId, 
+            })
+        }
     }
     //----------------------------------------------
     // INTERNAL:
@@ -166,6 +207,8 @@ class ScentuaryStage extends StageSuper{
         })
         //-------------------   
         this.BUILT2 = true
+        //-------------------  
+        // this.selectScent(null) 
         //-------------------   
         this.eval_start()
     }

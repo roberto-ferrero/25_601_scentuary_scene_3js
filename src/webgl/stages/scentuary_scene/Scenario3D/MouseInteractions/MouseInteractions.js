@@ -49,7 +49,9 @@ class MouseInteractions{
             this._update_rollover()
         })
         this.app.emitter.on("onAppMouseClick", (data)=>{
+            console.log("onAppMouseClick", data);
             const SCENT_ID = this._get_raycaster_object();
+            console.log("data.SCENT_ID", data.SCENT_ID);
             if(SCENT_ID != this.CURRENT_SELECTED_SCENT_ID){
                 this.CURRENT_SELECTED_SCENT_ID = data.SCENT_ID;
                 //this.stage.cameraManager.travelToScent(SCENT_ID)

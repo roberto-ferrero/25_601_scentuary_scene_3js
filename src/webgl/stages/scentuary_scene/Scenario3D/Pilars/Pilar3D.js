@@ -16,10 +16,10 @@ class Pilar3D{
         //-----------------------------
         this.mesh = this.stage.get_mesh_from_GLB_PROJECT(this.itemId)
         //--
-        this.texture = this.stage.loader.get_texture("pilars")
+        this.texture = this.stage.loader.get_texture(this.itemId)
         this.texture.flipY = false;
         //--
-        this.texture_ao = this.stage.loader.get_texture("pilars_ao")
+        this.texture_ao = this.stage.loader.get_texture(this.itemId+"_ao")
         this.texture_ao.flipY = false;
         //--
         const marbleMaterial = new THREE.MeshStandardMaterial({
@@ -27,10 +27,11 @@ class Pilar3D{
             aoMap: this.texture_ao,
             aoMapIntensity: 0.5,
             color: this.scenario.BESE_MARGEL_COLOR, // Ivory base color
+            // color: new THREE.Color(0xaf8140), // Ivory base color
             roughness: 0.4,   // Moderate roughness for a soft shine
             metalness: 0.0,   // Non-metallic
-            // emissive: 0xbab4b1, // Ivory base color
-            // emissiveIntensity: 0.1, // Soft glow
+            emissive: 0xbab4b1, // Ivory base color
+            emissiveIntensity: 0.1, // Soft glow
           });
         this.mesh.material = marbleMaterial
         this.mesh.castShadow = true;
