@@ -111,6 +111,7 @@ class ScentuaryStage extends StageSuper{
         // this.loader.add_hdr("sky", this.app.loader_pathPrefix+"hdr/syferfontein-1d-clear-pure-sky_2K_b7844629-ae4f-40d3-a4ca-c6a75946629c.hdr", true)
         // this.loader.add_hdr("sky", this.app.loader_pathPrefix+"hdr/tranquil-shorizon-sunset_4K_18d64fa0-51da-4ec1-9441-da453cfd3590.hdr", true)
         this.loader.add_hdr("sky", this.app.loader_pathPrefix+"hdr/tranquil-horizon-sunset_4K_18d64fa0-51da-4ec1-9441-da453cfd3590_centered.hdr", true)
+        this.loader.add_hdr("envmap", this.app.loader_pathPrefix+"hdr/georgentor_2k.hdr", true)
         // this.loader.add_hdr("sky", this.app.loader_pathPrefix+"hdr/sunset2_2K.hdr", true)
         
         //------------------------------
@@ -164,12 +165,19 @@ class ScentuaryStage extends StageSuper{
         //------------------- 
         const pmremGenerator = new THREE.PMREMGenerator(this.app.render.renderer);
         pmremGenerator.compileEquirectangularShader();
-        const hdrTexture = this.loader.get_hdr("sky")
-        const envMap = pmremGenerator.fromEquirectangular(hdrTexture).texture;
 
-        this.app.scene.environment = envMap;
-        this.app.scene.background = envMap; // this makes it your skybox
-        // this.app.scene.backgroundIntensity = .2
+        const bg_hdrTexture = this.loader.get_hdr("sky")
+        const bg = pmremGenerator.fromEquirectangular(bg_hdrTexture).texture;
+        this.app.scene.background = bg; // this makes it your skybox
+        
+        const envmap_hdrTexture = this.loader.get_hdr("envmap")
+        this.envmap = pmremGenerator.fromEquirectangular(envmap_hdrTexture).texture;
+        this.app.scene.environment = this.envmap;
+        this.app.scene.environmentIntensity = 0.0
+
+        bg_hdrTexture.dispose();
+        envmap_hdrTexture.dispose();
+        pmremGenerator.dispose();
 
         // const geometry = new THREE.BoxGeometry(5000, 5000, 5000);
         // const materialArray = [/* create materials using CubeTexture */];
@@ -257,7 +265,7 @@ class ScentuaryStage extends StageSuper{
     //     return mesh
     // }
     get_mesh_from_GLB_PROJECT(meshId, PROJECT = this.GLB_PROJECT){
-        // console.log("_extract_mesh_from_GLB_PROJECT: ", meshId);
+        console.log("_extract_mesh_from_GLB_PROJECT: ", meshId);
         const mesh = PROJECT.children.find((mesh)=>{
             const result = mesh.name == meshId
             return result

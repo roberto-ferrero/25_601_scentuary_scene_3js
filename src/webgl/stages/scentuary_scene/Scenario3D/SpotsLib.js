@@ -24,7 +24,7 @@ class SpotsLib{
     //----------------------------------------------
     // PUBLIC:
     get_spot(spotId){
-        // console.log("(SpotsLib.get_spot): ", spotId, this.DATA.get_item(spotId));
+        console.log("(SpotsLib.get_spot): ", spotId);
         return this.DATA.getItem(spotId).position.clone();
     }
     //----------------------------------------------

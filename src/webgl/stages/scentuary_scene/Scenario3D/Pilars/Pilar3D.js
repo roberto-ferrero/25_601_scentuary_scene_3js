@@ -1,5 +1,6 @@
 //import gsap from "gsap"
 import * as THREE from 'three'
+import Coin3D from './Coin3D'
 
 class Pilar3D{
     constructor (obj){
@@ -32,12 +33,29 @@ class Pilar3D{
             metalness: 0.0,   // Non-metallic
             emissive: 0xbab4b1, // Ivory base color
             emissiveIntensity: 0.1, // Soft glow
-          });
+        });
         this.mesh.material = marbleMaterial
         this.mesh.castShadow = true;
-        // console.log("mesh"s,this.mesh);
+        //-----------------------------
         this.parent3D.add(this.mesh)
+        //-----------------------------
 
+
+        //-----------------------------
+        // COIN:
+        const meshId = "coin"+this.itemId.split("pilar")[1]
+        const spotId = "pilartop"+this.itemId.split("pilar")[1]
+        this.coin = new Coin3D({
+            app: this.app,
+            project: this.project,
+            stage: this.stage,
+            scenario: this.scenario,
+            parent3D: this.parent3D,
+            pilar: this,
+            meshId: meshId,
+            spotId: spotId,
+            SCENT_ID: this.SCENT_ID,
+        })
     }
     //----------------------------------------------
     // PUBLIC:

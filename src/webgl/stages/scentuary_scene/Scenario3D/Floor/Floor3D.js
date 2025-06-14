@@ -26,7 +26,7 @@ class Floor3D{
             // lightMap: this.texture_light,
             // lightMapIntensity: 0.5,
             color: this.scenario.BESE_MARGEL_COLOR, // Ivory base color
-            roughness: 0.5,   // Moderate roughness for a soft shine
+            roughness: 0.45,   // Moderate roughness for a soft shine
             metalness: 0.0,   // Non-metallic
             
           });

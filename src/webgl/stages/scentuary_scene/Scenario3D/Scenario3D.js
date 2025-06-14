@@ -41,7 +41,7 @@ class Scenario3D{
         })
         //---------------------------
         // LIGHTS:
-        const dev_ambientLight = new THREE.AmbientLight(0xffffff, 1.5); // Soft white light
+        const dev_ambientLight = new THREE.AmbientLight(0xffffff, 0.8); // Soft white light
         this.parent3D.add(dev_ambientLight);
         //---
         this.dev_pointLight = new PointLight3D({
@@ -60,7 +60,7 @@ class Scenario3D{
             scenario:this,
             parent3D:this.cont3D,
             itemId:"dev_light2",
-            pointLight: new THREE.PointLight(0xffdd81, 20, 100, 3) // color, intensity, distance
+            pointLight: new THREE.PointLight(0xffdd81, 40, 100, 3) // color, intensity, distance
         })
         this.dev_pointLight3 = new PointLight3D({
             app:this.app,
@@ -69,7 +69,7 @@ class Scenario3D{
             scenario:this,
             parent3D:this.cont3D,
             itemId:"dev_light3",
-            pointLight: new THREE.PointLight(0xe9b372, 20, 100, 3) // color, intensity, distance
+            pointLight: new THREE.PointLight(0xe9b372, 40, 100, 3) // color, intensity, distance
         })
         //---------------------------
         // HITS :
